@@ -13,7 +13,7 @@ dkgosqlimdbapi/
 2. Run make in folder: dkgosqlimdbapi
 	make genProtoBuf
 	
-3 Setup mysql password into 
+3. Setup mysql password into 
 	imdbgrpc-server/config-local.yml and imdbapi-service/config-local.yml
 	
 4. Run make into imdbapi-service (REST-API SERVER)
