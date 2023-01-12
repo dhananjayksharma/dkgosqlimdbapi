@@ -14,11 +14,7 @@ dkgosqlimdbapi/
 	make genProtoBuf
 	
 3 Setup mysql password into 
-	imdbgrpc-server/config-local.yml
-	
-	and
-	
-	imdbapi-service/config-local.yml
+	imdbgrpc-server/config-local.yml and imdbapi-service/config-local.yml
 	
 4. Run make into imdbapi-service (REST-API SERVER)
 	make
