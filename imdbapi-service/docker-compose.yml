@@ -1,0 +1,27 @@
+version: '3'
+services:
+  database:
+    image: mysql:8.0.28
+    environment:
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    ports:
+      - 3306:3306
+    networks:
+      - fullstack
+  app:
+    build:
+      # context: ./imdbapi-service/
+      dockerfile: Dockerfile
+    ports:
+      - "8989:8989"
+    depends_on:
+      - database
+    networks:
+      - fullstack
+
+networks:
+  fullstack:
+    driver: bridge

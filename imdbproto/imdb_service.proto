@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package imdbproto;
+
+option go_package = "github.com/dhananjayksharma/dkgosqlimdbapi/imdbproto;imdbprotopb";
+
+service ImdbService{ 
+    rpc AddPerson(RequestAddPerson) returns (ResponseAddPerson){};// Unary
+    rpc AddManyPerson(stream RequestAddPerson) returns (ResponseAddManyPerson){} ;// Client Streaming
+    rpc ListPerson(SearchPersonRequest) returns (stream Person){}; // Server Streaming
+    rpc ListPersonById(stream SearchPersonRequest) returns (stream Person){};// Bidirectional Streaming
+}
+
+message RequestAddPerson{
+    string Email = 1;
+    string Name = 2;
+    int32 Age = 3;
+    Gender gender = 4;
+    string Phone = 5;
+}
+
+message ResponseAddPerson{
+    Person person = 1;
+}
+message Address{
+    string Flat =1;
+    string Street=2;
+    int32 PinCode=3;
+}
+message Person{
+    string Id = 1;
+    string Email = 2;
+    string Name = 3;
+    int32 Age = 4;
+    Gender gender = 5;
+}
+
+enum Gender{
+    GENDER_UNSPECIFIED = 0;
+    GENDER_MALE = 1;
+    GENDER_FEMALE = 2;
+}
+
+message SearchPersonRequest{
+    string Query = 1; 
+}
+
+message ResponseAddManyPerson{
+    int32 count=1;
+}

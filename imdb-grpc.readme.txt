@@ -1,0 +1,22 @@
+option 1: this is for relatie output where protos files exists
+
+protoc --go_out=. --go-grpc_out=. --go_opt=paths=source_relative --go-grpc_opt=paths=source_relative imdbproto/*.proto
+
+option 2: this will create in option defined in .proto files but with fullpath:
+
+    i.e. option go_package = "github.com/dhananjayksharma/dkgosqlimdbapi/imdbprotopb;";
+    protoc --go_out=. --go-grpc_out=. imdbproto/*.proto
+
+option 3: working
+    protoc --go_out=. --go-grpc_out=. imdbproto/*.proto
+
+go mod init github.com/dhananjayksharma/dkgosqlimdbapi
+
+
+OPTIONS TRYING:
+
+option go_package = "github.com/dhananjayksharma/dkgosqlimdbapi/imdbproto;imdbprotopb";
+
+protoc --go_out=imdbprotopb --go-grpc_out=imdbprotopb imdbproto/*.proto
+protoc --go_out=. --go-grpc_out=. imdbproto/*.proto
+
