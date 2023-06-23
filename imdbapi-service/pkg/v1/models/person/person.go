@@ -68,30 +68,30 @@ func (service personService) CreateUserBygRPC(c *gin.Context) (models.Response, 
 		Name:      addUserRequest.Name,
 	}
 
-	personReq := imdbprotopb.RequestAddPerson{
-		Name:   addUserRequest.Name,
-		Email:  addUserRequest.Email,
-		Age:    int32(addUserRequest.Age),
-		Gender: 2,
-	}
-	fmt.Println("Starting Client...")
-	connection, err := grpc.Dial("localhost:50059", grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Fatalf("did not connect: %v", err)
-	}
-	defer connection.Close()
+	// personReq := imdbprotopb.RequestAddPerson{
+	// 	Name:   addUserRequest.Name,
+	// 	Email:  addUserRequest.Email,
+	// 	Age:    int32(addUserRequest.Age),
+	// 	Gender: 2,
+	// }
+	// fmt.Println("Starting Client...")
+	// connection, err := grpc.Dial("localhost:50059", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	// if err != nil {
+	// 	log.Fatalf("did not connect: %v", err)
+	// }
+	// defer connection.Close()
 
-	grpcClient := imdbprotopb.NewImdbServiceClient(connection)
+	// grpcClient := imdbprotopb.NewImdbServiceClient(connection)
 
-	// ctxnew := context.Context(context.Background())
-	respn, err := grpcClient.AddPerson(ctx, &personReq)
-	if err != nil {
-		log.Printf("Failed to add person : %v, err: %v", personReq, err)
-	}
+	// // ctxnew := context.Context(context.Background())
+	// respn, err := grpcClient.AddPerson(ctx, &personReq)
+	// if err != nil {
+	// 	log.Printf("Failed to add person : %v, err: %v", personReq, err)
+	// }
 
 	// fmt.Println("Received from Server:", resp.Person.GetEmail(), resp.Person.GetAge(), resp.Person.GetGender())
-	log.Printf("respn:%v", respn)
-	resp.Data = respn
+	// log.Printf("respn:%v", respn)
+	resp.Data = resp
 	return resp, nil
 }
 
@@ -136,6 +136,7 @@ func (service personService) CreatePerson(c *gin.Context) (models.Response, erro
 	return resp, nil
 }
 
+// ListPerson ...
 func (srv *personService) ListPerson(c *gin.Context) (models.Response, error) {
 	var err error
 	// set context

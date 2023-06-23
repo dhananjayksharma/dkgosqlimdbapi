@@ -120,7 +120,8 @@ func (ms *mySQLDBStore) ListMovieByCode(ctx context.Context, movie *entities.Mov
 }
 
 //func (ms *mySQLDBStore) ListPerson(ctx context.Context, personData *[]response.PersonResponse, queryParams request.QueryMembersInputRequest)
-// ListPerson
+
+// ListPerson ...
 func (ms *mySQLDBStore) ListPerson(ctx context.Context, personData *[]response.PersonResponse) error {
 	result := ms.db.WithContext(ctx).Model(&response.PersonResponse{}).Select("id,  email, name, mobile, age, is_active, created_at, updated_at").Find(&personData)
 	err := result.Error
