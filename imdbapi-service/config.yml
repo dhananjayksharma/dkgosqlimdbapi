@@ -4,8 +4,9 @@ ENV_RUN_ENV : "Started service running as "
 
 database:
   db_one_readwrite:
-    dbname: "imdbdbdemo"
-    dbuser: "root"
-    dbpassword: "root#123PD"
-    hostname: "127.0.0.1:3360"
+    dbname:"imdbdbdemo"
+    dbuser:"root"
+    dbpassword:"root#123PD"
+    hostname:"127.0.0.1"
+    hostport:"3360"
 

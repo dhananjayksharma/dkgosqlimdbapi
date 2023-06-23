@@ -1,74 +1,53 @@
 package mysql
 
 import (
-	"errors"
 	"fmt"
-	"time"
 
 	"github.com/gin-gonic/gin"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/spf13/viper"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
+
+const DB_USERNAME = "root"
+const DB_PASSWORD = "root#123PD"
+const DB_NAME = "imdbdbdemo"
+const DB_HOST = "127.0.0.1"
+const DB_PORT = "3306"
 
 type MySQLDbStore struct {
 	DB *gorm.DB
 }
 
 func DBConn(dbsconn string) (*gorm.DB, error) {
-
 	fmt.Println("dbsconn :", dbsconn)
+	// var (
+	// // databasename, host, userPass, port, userName string
+	// )
 
-	var (
-		databasename, hostPort, userPass, userName string
-	)
+	// userName = viper.GetString("database.db_one_readwrite.dbuser")
+	// userPass = viper.GetString("database.db_one_readwrite.dbpassword")
+	// host = viper.GetString("database.db_one_readwrite.hostname")
+	// port = viper.GetString("database.db_one_readwrite.hostport")
+	// databasename = viper.GetString("database.db_one_readwrite.dbname")
 
-	if dbsconn == "db_one_readwrite" || true {
-		userName = viper.GetString("database.db_one_readwrite.dbuser")
-		userPass = viper.GetString("database.db_one_readwrite.dbpassword")
-		hostPort = viper.GetString("database.db_one_readwrite.hostname")
-		databasename = viper.GetString("database.db_one_readwrite.dbname")
-	} else if dbsconn == "db_one_read" {
-		userName = viper.GetString("database.db_one_read.dbuser")
-		userPass = viper.GetString("database.db_one_read.dbpassword")
-		hostPort = viper.GetString("database.db_one_read.hostname")
-		databasename = viper.GetString("database.db_one_read.dbname")
-	} else if dbsconn == "db_one_write" {
-		userName = viper.GetString("database.db_one_write.dbuser")
-		userPass = viper.GetString("database.db_one_write.dbpassword")
-		hostPort = viper.GetString("database.db_one_write.hostname")
-		databasename = viper.GetString("database.db_one_write.dbname")
-	} else {
-		return nil, errors.New("database connection not found")
-	}
+	// dsn := userName + ":" + userPass + "@tcp" + "(" + host + ":" + port + ")/" + databasename + "?" + "parseTime=true&loc=Local"
+	// fmt.Println("dsn : ", dsn)
+	// db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
-	var DB_URI = userName + ":" + userPass + "@tcp(" + hostPort + ")/" + databasename + "?parseTime=true&loc=Local"
-	//dsn := DB_USERNAME + ":" + DB_PASSWORD + "@tcp" + "(" + DB_HOST + ":" + DB_PORT + ")/" + DB_NAME + "?" + "parseTime=true&loc=Local"
-	fmt.Println("DB_URI:", DB_URI)
-	// dataConfig := &gorm.Config{}
-	// db, err := gorm.Open(mysql.New(mysql.Config{
-	// 	DSN:                       strings.Trim(DB_URI, "'"),
-	// 	DefaultStringSize:         256,
-	// 	DisableDatetimePrecision:  true,
-	// 	DontSupportRenameIndex:    true,
-	// 	DontSupportRenameColumn:   true,
-	// 	SkipInitializeWithVersion: false,
-	// }), dataConfig)
-	db, err := gorm.Open(mysql.Open(DB_URI), &gorm.Config{})
+	// dsn := userName + ":" + userPass + "@tcp" + "(" + host + ":" + port + ")/" + databasename + "?" + "parseTime=true&loc=Local"
+	// fmt.Println("dsn : ", dsn)
+
+	// db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	dsn := DB_USERNAME + ":" + DB_PASSWORD + "@tcp" + "(" + DB_HOST + ":" + DB_PORT + ")/" + DB_NAME + "?" + "parseTime=true&loc=Local"
+	fmt.Println("dsn : ", dsn)
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return db, err
 	}
 
-	rawSqlForSetDababase := "USE " + databasename + ";"
+	rawSqlForSetDababase := "USE " + DB_NAME + ";"
 	db.Exec(rawSqlForSetDababase)
-	sqlDB, err := db.DB()
-	if err != nil {
-		return db, err
-	}
-	sqlDB.SetMaxIdleConns(10)
-	sqlDB.SetMaxOpenConns(100)
-	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	return db, nil
 }
