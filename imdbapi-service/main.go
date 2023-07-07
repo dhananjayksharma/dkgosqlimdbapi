@@ -121,5 +121,5 @@ func listenAndServe(router *gin.Engine, port string) {
 		log.Fatalf("Server forced to shutdown: %v", err)
 	}
 
-	log.Printf("Server exiting")
+	log.Printf("Server exiting...!")
 }
